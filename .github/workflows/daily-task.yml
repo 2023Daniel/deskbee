@@ -2,7 +2,7 @@ name: Run Script Daily at Midnight
 
 on:
   schedule:
-    - cron: '13 14 * * *'  # A cada 14:13 UTC (11:13 horário de Brasília)
+    - cron: '51 16 * * *'  # A cada 14:13 UTC (11:13 horário de Brasília)
 
 jobs:
   run-selenium-script:
@@ -24,20 +24,6 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install selenium==4.13.0 chromedriver-autoinstaller==0.6.4
 
-      # Configura o Chromium e o Chromedriver
-      - name: Setup Chromium and Chromedriver
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y chromium-browser
-          echo "CHROME_BIN=$(which chromium-browser)" >> $GITHUB_ENV
-
       # Executa o script Selenium
       - name: Run Selenium Script
         run: python script.py
-
-      # Remove o Chromium após o uso
-      - name: Cleanup
-        if: always()
-        run: |
-          sudo apt-get purge -y chromium-browser
-          sudo apt-get autoremove -y
