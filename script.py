@@ -94,5 +94,5 @@ try:
 
 finally:
     # Aguardar alguns segundos antes de fechar o navegador
-    time.sleep(500)  # Tempo reduzido para uma execução mais rápida
+    time.sleep(5)  # Tempo reduzido para uma execução mais rápida
     driver.quit()
