@@ -26,7 +26,7 @@ jobs:
 
       - name: Run Selenium Script
         run: |
-          python seu_script.py  # Certifique-se de que o script está no repositório
+          python script.py  # Certifique-se de que o script está no repositório
 
       - name: Cleanup
         run: |
