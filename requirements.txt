@@ -1,0 +1,4 @@
+selenium==4.13.0  # Versão estável do Selenium
+chromedriver-autoinstaller==0.5.3  # Para gerenciar o Chromedriver automaticamente
+pytest==7.4.0  # Para testes, se necessário
+requests==2.31.0  # Para fazer requisições HTTP, se usado no projeto
