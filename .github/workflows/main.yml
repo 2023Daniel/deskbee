@@ -2,7 +2,8 @@ name: Daily Automation
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Rodar diariamente às 00:00 UTC (21h no horário de Brasília)
+    - cron: '29 23 * * *'  # Rodar diariamente às 23:29 UTC
+  workflow_dispatch:  # Permite disparar manualmente
 
 jobs:
   automation:
