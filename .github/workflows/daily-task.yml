@@ -2,6 +2,7 @@ name: Run Script Daily at Midnight
 
 on:
   schedule:
+   workflow_dispatch:  # Este é o evento que permite a execução manual
     - cron: '0 0 * * *'  # A cada 00:00 UTC (meia-noite UTC)
 
 jobs:
