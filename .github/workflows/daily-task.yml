@@ -1,0 +1,32 @@
+name: Run Script Daily at Midnight
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # A cada 00:00 UTC (meia-noite UTC)
+
+jobs:
+  run-selenium-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.9'  # Use a versão desejada do Python
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install selenium
+          sudo apt-get install -y chromium-chromedriver
+          sudo apt-get install -y chromium-browser
+
+      - name: Run Selenium Script
+        run: |
+          python seu_script.py  # Certifique-se de que o script está no repositório
+
+      - name: Cleanup
+        run: |
+          sudo apt-get purge -y chromium-chromedriver chromium-browser
