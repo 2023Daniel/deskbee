@@ -2,7 +2,7 @@ name: Run Script Daily at Midnight
 
 on:
   schedule:
-    - cron: '52 11 * * *'
+    - cron: '59 11 * * *'
 
 jobs:
   run-selenium-script:
@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install selenium==4.13.0 chromedriver-autoinstaller==0.5.3
+          python -m pip install selenium==4.13.0 chromedriver-autoinstaller==0.6.4
 
       # Configura o Chromium e o Chromedriver
       - name: Setup Chromium and Chromedriver
