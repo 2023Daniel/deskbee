@@ -2,8 +2,7 @@ name: Daily Automation
 
 on:
   schedule:
-    - cron: '29 23 * * *'  # Rodar diariamente às 23:29 UTC
-  workflow_dispatch:
+    - cron: '0 0 * * *'  # Rodar diariamente à meia-noite UTC
 
 jobs:
   automation:
@@ -20,11 +19,9 @@ jobs:
 
       - name: Instalar Dependências
         run: |
-          pip install selenium
           sudo apt-get update
           sudo apt-get install -y chromium-browser chromium-chromedriver
+          pip install selenium
 
       - name: Rodar o Script
         run: python script.py
-        env:
-          DISPLAY: :99  # Necessário para rodar o Chromium em um ambiente sem cabeça (headless)
