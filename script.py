@@ -57,7 +57,7 @@ try:
     data_input = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//input[@aria-label='Data da reserva, inserir dia, mês e ano']"))
     )
-    data_input.send_keys("01022025")
+    data_input.send_keys("06022025")
 
     # Localizar o campo de horário de início e digitar o horário
     hora_inicio_input = WebDriverWait(driver, 10).until(
