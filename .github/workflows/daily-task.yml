@@ -2,7 +2,7 @@ name: Run Script Daily at Midnight
 
 on:
   schedule:
-    - cron: '43 11 * * *'
+    - cron: '52 11 * * *'
 
 jobs:
   run-selenium-script:
