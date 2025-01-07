@@ -1,0 +1,27 @@
+name: Daily Automation
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Rodar diariamente às 00:00 UTC (21h no horário de Brasília)
+
+jobs:
+  automation:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do Repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Instalar Dependências
+        run: |
+          pip install selenium
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver
+
+      - name: Rodar o Script
+        run: python script.py
