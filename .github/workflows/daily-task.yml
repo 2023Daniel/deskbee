@@ -14,18 +14,21 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
-          python-version: '3.9'  # Use a versão desejada do Python
+          python-version: '3.9'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install selenium
-          sudo apt-get install -y chromium-chromedriver
-          sudo apt-get install -y chromium-browser
+          pip install -r requirements.txt
+
+      - name: Setup Chromedriver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser chromium-chromedriver
+          echo 'export PATH=$PATH:/usr/lib/chromium-browser/' >> $GITHUB_ENV
 
       - name: Run Selenium Script
-        run: |
-          python script.py  # Certifique-se de que o script está no repositório
+        run: python script.py
 
       - name: Cleanup
         run: |
