@@ -2,7 +2,7 @@ name: Run Script Daily at Midnight
 
 on:
   schedule:
-    - cron: '51 16 * * *'  # A cada 14:13 UTC (11:13 horário de Brasília)
+    - cron: '05 17 * * *'  # A cada 14:13 UTC (11:13 horário de Brasília)
 
 jobs:
   run-selenium-script:
