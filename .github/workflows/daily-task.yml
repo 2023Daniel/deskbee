@@ -19,30 +19,22 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          else
-            echo "requirements.txt not found"
-            exit 1
-          fi
+          python -m pip install selenium==4.13.0 chromedriver-autoinstaller==0.5.3
 
       - name: Setup Chromium and Chromedriver
         run: |
           sudo apt-get update
-          sudo apt-get install -y chromium-browser chromium-chromedriver
-          export CHROMEDRIVER=$(which chromedriver)
+          sudo apt-get install -y chromium-browser
           export CHROME_BIN=$(which chromium-browser)
-          echo "CHROMEDRIVER=$CHROMEDRIVER" >> $GITHUB_ENV
+          export CHROMEDRIVER=$(which chromedriver)
           echo "CHROME_BIN=$CHROME_BIN" >> $GITHUB_ENV
+          echo "CHROMEDRIVER=$CHROMEDRIVER" >> $GITHUB_ENV
 
       - name: Run Selenium Script
-        env:
-          CHROMEDRIVER: ${{ secrets.CHROMEDRIVER }}
-          CHROME_BIN: ${{ secrets.CHROME_BIN }}
         run: python script.py
 
       - name: Cleanup
         if: always()
         run: |
-          sudo apt-get purge -y chromium-chromedriver chromium-browser
+          sudo apt-get purge -y chromium-browser
           sudo apt-get autoremove -y
