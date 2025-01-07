@@ -3,7 +3,7 @@ name: Daily Automation
 on:
   schedule:
     - cron: '29 23 * * *'  # Rodar diariamente às 23:29 UTC
-  workflow_dispatch:  # Permite disparar manualmente
+  workflow_dispatch:
 
 jobs:
   automation:
@@ -26,3 +26,5 @@ jobs:
 
       - name: Rodar o Script
         run: python script.py
+        env:
+          DISPLAY: :99  # Necessário para rodar o Chromium em um ambiente sem cabeça (headless)
