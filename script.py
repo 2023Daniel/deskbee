@@ -3,17 +3,24 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 import time
 
-# Caminho do ChromeDriver - Alterar para o caminho real no seu sistema
-driver_path = "C:\\webdrivers\\chromedriver.exe"  # Exemplo, altere conforme seu sistema
+# Configuração para rodar no ambiente headless
+options = Options()
+options.add_argument('--headless')  # Para rodar sem interface gráfica
+options.add_argument('--no-sandbox')  # Necessário para CI
+options.add_argument('--disable-dev-shm-usage')  # Para evitar falhas de memória
 
-# Inicia o navegador com a forma correta de passar o caminho do ChromeDriver
+# Caminho do chromedriver no ambiente Ubuntu (GitHub Actions)
+driver_path = "/usr/lib/chromium-browser/chromedriver"  # Caminho no Ubuntu
+
+# Serviço do Selenium configurado para o ChromeDriver
 service = Service(driver_path)
-driver = webdriver.Chrome(service=service)
+driver = webdriver.Chrome(service=service, options=options)
 
 try:
-    # Maximizar a janela do navegador
+    # Maximizar a janela do navegador (não será visível devido ao modo headless)
     driver.maximize_window()
 
     # Acessar a página de login
@@ -67,7 +74,7 @@ try:
     )
     lista_button.click()
 
- # Esperar a página carregar e localizar o campo de busca da estação
+    # Esperar a página carregar e localizar o campo de busca da estação
     busca_estacao_input = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//input[@aria-label='Buscar estação de trabalho pelo nome, pressione enter para completar sua busca']"))
     )
@@ -80,17 +87,15 @@ try:
     
     # Localizar o botão "Selecionar" e clicar
     selecionar_button = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Selecionar EST 8.127, Paulista › São Paulo › 8º Andar']"))
+        EC.element_to_be_clickable((By.XPATH, "//button[@aria-label='Selecionar EST 8.127, Paulista › São Paulo › 8º Andar']"))
     )
     selecionar_button.click()
     
     # Localizar e clicar no botão "CONFIRMO QUE LI E ESTOU DE ACORDO"
     confirmar_button = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'q-btn') and contains(., 'CONFIRMO QUE LI E ESTOU DE ACORDO')]"))
+        EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'q-btn') and contains(., 'CONFIRMO QUE LI E ESTOU DE ACORDO')]"))
     )
     confirmar_button.click()
-
-
 
 finally:
     # Aguardar alguns segundos antes de fechar o navegador
