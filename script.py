@@ -17,7 +17,10 @@ driver_path = "/usr/lib/chromium-browser/chromedriver"  # Caminho no Ubuntu
 
 # Serviço do Selenium configurado para o ChromeDriver
 service = Service(driver_path)
+
+# Aumentando o tempo de espera para garantir que o carregamento da página não falhe
 driver = webdriver.Chrome(service=service, options=options)
+driver.implicitly_wait(20)  # Implicitamente esperar até 20 segundos para todos os elementos
 
 try:
     # Maximizar a janela do navegador (não será visível devido ao modo headless)
@@ -83,7 +86,7 @@ try:
     busca_estacao_input.send_keys("EST 8.127")
 
     # Esperar que a busca seja realizada, se necessário
-    time.sleep(3)  # Ajuste o tempo dependendo da resposta do sistema
+    time.sleep(5)  # Ajuste o tempo dependendo da resposta do sistema
     
     # Localizar o botão "Selecionar" e clicar
     selecionar_button = WebDriverWait(driver, 10).until(
