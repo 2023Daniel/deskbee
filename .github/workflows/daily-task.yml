@@ -2,8 +2,7 @@ name: Run Script Daily at Midnight
 
 on:
   schedule:
-    - cron: '27 3 * * *'  # A cada 00:04 UTC (meia-noite e quatro minutos UTC)
-  workflow_dispatch:  # Este é o evento que permite a execução manual
+    - cron: '41 3 * * *'
 
 jobs:
   run-selenium-script:
