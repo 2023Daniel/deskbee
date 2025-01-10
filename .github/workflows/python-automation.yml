@@ -3,8 +3,7 @@ name: Rodar script Selenium
 on:
   schedule:
     # Executar todos os dias às 00h00, horário de Brasília (00h00 -3h em Brasília => 03h00 UTC)
-    - cron: '0 3 * * *'  # Hora de Brasília (UTC-3) = 03h00 UTC
-  workflow_dispatch:  # Permite executar manualmente também
+    - cron: '30 11 * * *'  # Hora de Brasília (UTC-3) = 03h00 UTC
 
 jobs:
   run-selenium:
