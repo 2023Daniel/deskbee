@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
@@ -48,13 +49,15 @@ try:
     entrar_button = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, "//span[contains(text(),'Entrar')]"))
     )
-    entrar_button.click()
+    driver.execute_script("arguments[0].scrollIntoView(true);", entrar_button)  # Garante visibilidade
+    ActionChains(driver).move_to_element(entrar_button).click().perform()  # Alternativa para cliques
     logging.info("Botão 'Entrar' clicado.")
 
     # Clicar no botão "Reserva Estação"
     reserva_estacao_button = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, "//span[@data-msgid='Reserva Estação']"))
     )
+    driver.execute_script("arguments[0].scrollIntoView(true);", reserva_estacao_button)
     reserva_estacao_button.click()
     logging.info("Botão 'Reserva Estação' clicado.")
 
@@ -66,7 +69,7 @@ try:
     data_input.send_keys("01/02/2025")  # Adicionando o formato correto
     logging.info("Data da reserva preenchida.")
 
-    # Pausa para evitar conflitos no preenchimento
+    # Pequena pausa para evitar conflitos
     time.sleep(2)
 
     # Preencher o horário de início
@@ -103,6 +106,7 @@ try:
     selecionar_button = WebDriverWait(driver, 30).until(
         EC.element_to_be_clickable((By.XPATH, "//button[contains(@aria-label, 'Selecionar EST 8.127')]"))
     )
+    driver.execute_script("arguments[0].scrollIntoView(true);", selecionar_button)
     selecionar_button.click()
     logging.info("Botão 'Selecionar' clicado.")
 
@@ -110,10 +114,12 @@ try:
     confirmar_button = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'q-btn') and contains(., 'CONFIRMO QUE LI E ESTOU DE ACORDO')]"))
     )
+    driver.execute_script("arguments[0].scrollIntoView(true);", confirmar_button)
     confirmar_button.click()
     logging.info("Reserva confirmada.")
 
 except Exception as e:
+    driver.save_screenshot("erro.png")  # Captura um screenshot no caso de erro
     logging.error(f"Erro durante a execução do script: {e}")
 finally:
     driver.quit()
