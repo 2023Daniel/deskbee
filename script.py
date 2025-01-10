@@ -1,11 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime, timedelta
 import time
+import chromedriver_autoinstaller  # Para instalar o ChromeDriver automaticamente
 
 def calcular_data_valida():
     # Começar com 30 dias a partir de hoje
@@ -19,18 +20,23 @@ def calcular_data_valida():
     # Retornar a data no formato ddMMyyyy
     return data_valida.strftime("%d%m%Y")
 
-# Configurações para rodar o Chrome de forma headless no GitHub Actions
-chrome_options = Options()
-chrome_options.add_argument('--headless')  # Executar sem interface gráfica
-chrome_options.add_argument('--no-sandbox')  # Necessário para rodar no ambiente CI/CD
-chrome_options.add_argument('--disable-dev-shm-usage')  # Resolve problemas de memória em containers
-chrome_options.add_argument('--disable-gpu')  # Desativa a aceleração de GPU, pode ser útil em CI
+# Instalar o ChromeDriver automaticamente
+chromedriver_autoinstaller.install()
 
-# Inicia o navegador com a configuração de ChromeDriver no GitHub Actions
-driver = webdriver.Chrome(options=chrome_options)
+# Configuração para rodar no modo headless
+options = Options()
+options.add_argument('--headless')  # Executar em modo headless
+options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
+
+# Inicializar o serviço do ChromeDriver
+service = Service()
+
+# Inicia o navegador com a configuração de headless
+driver = webdriver.Chrome(service=service, options=options)
 
 try:
-    # Maximizar a janela do navegador
+    # Maximizar a janela do navegador (não será visível em headless, mas é uma boa prática)
     driver.maximize_window()
 
     # Acessar a página de login
