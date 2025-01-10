@@ -3,7 +3,7 @@ name: Run Script Daily at 21:05 Brasília Time
 on:
   schedule:
     - cron: '25 00 * * *'  # Executa às 00:05 UTC (21:05 horário de Brasília)
-     workflow_dispatch:  # Permite execução manual
+  workflow_dispatch:  # Permite execução manual
 
 jobs:
   run-selenium-script:
