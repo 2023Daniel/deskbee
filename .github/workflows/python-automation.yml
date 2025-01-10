@@ -1,18 +1,11 @@
 name: Python Automation Workflow
 
 on:
-  schedule:
-    - cron: '*/30 * * * *'  # Executa a cada 30 minutos
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:  # Permite execução manual
 
 jobs:
   run_script:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Definindo o sistema operacional para o runner
 
     steps:
     - name: Check out repository
@@ -33,7 +26,12 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y chromium-browser
         sudo apt-get install -y chromium-chromedriver
-        echo "/usr/lib/chromium-browser/chromedriver" > ~/.chromedriver
+        sudo apt-get install -y wget
+
+    - name: Set up Chrome options for Selenium
+      run: |
+        echo "export CHROME_BIN=/usr/bin/chromium-browser" >> $GITHUB_ENV
+        echo "export DISPLAY=:99" >> $GITHUB_ENV
     
     - name: Run Python script
       run: |
