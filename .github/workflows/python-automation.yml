@@ -5,7 +5,7 @@ on:
     - cron: '0 0 * * *'  # Executa todos os dias à meia-noite (00h00 UTC)
   push:
     branches:
-      - main  # ou qualquer outra branch que você queira
+      - main
   pull_request:
     branches:
       - main
@@ -21,7 +21,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'  # ou a versão do Python que você preferir
+        python-version: '3.9'
     
     - name: Install dependencies
       run: |
@@ -34,8 +34,6 @@ jobs:
         sudo apt-get install -y chromium-browser
         sudo apt-get install -y chromium-chromedriver
         echo "/usr/lib/chromium-browser/chromedriver" > ~/.chromedriver
-        sudo apt-get install -y python3-selenium
-        sudo apt-get install -y python3-pip
     
     - name: Run Python script
       run: |
