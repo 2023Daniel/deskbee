@@ -2,7 +2,7 @@ name: Python Automation Workflow
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Executa todos os dias à meia-noite (00h00 UTC)
+    - cron: '*/30 * * * *'  # Executa a cada 30 minutos
   push:
     branches:
       - main
