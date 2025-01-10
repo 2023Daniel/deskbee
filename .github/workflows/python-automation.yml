@@ -1,0 +1,42 @@
+name: Python Automation Workflow
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Executa todos os dias à meia-noite (00h00 UTC)
+  push:
+    branches:
+      - main  # ou qualquer outra branch que você queira
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'  # ou a versão do Python que você preferir
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install selenium
+    
+    - name: Install Chromium and ChromeDriver
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y chromium-browser
+        sudo apt-get install -y chromium-chromedriver
+        echo "/usr/lib/chromium-browser/chromedriver" > ~/.chromedriver
+        sudo apt-get install -y python3-selenium
+        sudo apt-get install -y python3-pip
+    
+    - name: Run Python script
+      run: |
+        python automated_task.py
