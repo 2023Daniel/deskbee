@@ -1,28 +1,29 @@
-name: Run Script at Midnight
+name: Rodar script Selenium
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Executa todos os dias à meia-noite UTC
-  workflow_dispatch:  # Permite rodar manualmente também
+    # Executar todos os dias às 00h00, horário de Brasília (00h00 -3h em Brasília => 03h00 UTC)
+    - cron: '0 3 * * *'  # Hora de Brasília (UTC-3) = 03h00 UTC
+  workflow_dispatch:  # Permite executar manualmente também
 
 jobs:
-  run:
-    runs-on: ubuntu-latest  # Ambiente de execução no GitHub Actions (Ubuntu)
-    
+  run-selenium:
+    runs-on: ubuntu-latest  # Usar Ubuntu para rodar o Selenium
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2  # Faz o checkout do repositório
+      - name: Checkout do repositório
+        uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: Configurar Python e dependências
+        uses: actions/setup-python@v4
         with:
-          python-version: '3.10'  # Defina a versão do Python que você está usando
+          python-version: '3.8'
 
-      - name: Install dependencies
+      - name: Instalar dependências
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt  # Instala as dependências
+          pip install selenium chromedriver-autoinstaller
 
-      - name: Run the Python script
+      - name: Rodar o script Selenium
         run: |
-          python script.py  # Execute seu script Python
+          python script.py  # Substitua pelo nome do seu script Python
