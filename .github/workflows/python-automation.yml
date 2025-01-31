@@ -2,12 +2,11 @@ name: Rodar script Selenium
 
 on:
   schedule:
-    # Executar todos os dias às 00h00, horário de Brasília (00h00 -3h em Brasília => 03h00 UTC)
     - cron: '30 11 * * *'  # Hora de Brasília (UTC-3) = 03h00 UTC
 
 jobs:
   run-selenium:
-    runs-on: ubuntu-latest  # Usar Ubuntu para rodar o Selenium
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do repositório
@@ -25,4 +24,4 @@ jobs:
 
       - name: Rodar o script Selenium
         run: |
-          python script.py  # Substitua pelo nome do seu script Python
+          python script.py  # Certifique-se de que este é o nome correto do script
