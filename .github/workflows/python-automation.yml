@@ -2,7 +2,7 @@ name: Rodar script Selenium
 
 on:
   schedule:
-    - cron: '30 11 * * *'  # Hora de Brasília (UTC-3) = 03h00 UTC
+    - cron: '0 3 * * *'  # Hora de Brasília (UTC-3) = 03h00 UTC
 
 jobs:
   run-selenium:
