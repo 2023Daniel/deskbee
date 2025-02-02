@@ -92,7 +92,7 @@ try:
     busca_estacao_input = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//input[@aria-label='Buscar estação de trabalho pelo nome, pressione enter para completar sua busca']"))
     )
-    busca_estacao_input.send_keys("EST 8.127")
+    busca_estacao_input.send_keys("EST 8.128")
 
     # Aguardar o tempo necessário para a busca ser realizada
     WebDriverWait(driver, 10).until(
