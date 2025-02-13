@@ -5,7 +5,12 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime, timedelta
-import chromedriver_autoinstaller  # Para instalar o ChromeDriver automaticamente
+
+# Removendo chromedriver_autoinstaller devido ao erro de import
+
+def log(mensagem):
+    timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    print(f"[{timestamp}] {mensagem}")
 
 def calcular_data_valida():
     data_atual = datetime.now()
@@ -16,98 +21,92 @@ def calcular_data_valida():
     
     return data_valida.strftime("%d%m%Y")
 
-# Instalar o ChromeDriver automaticamente e verificar se não ocorre erro
-try:
-    chromedriver_autoinstaller.install()
-except Exception as e:
-    print(f"Erro ao instalar o ChromeDriver: {e}")
-    exit(1)
-
 options = Options()
 options.add_argument('--headless')  # Executar em modo headless
 options.add_argument('--no-sandbox')
 options.add_argument('--disable-dev-shm-usage')
 
 service = Service()
-
 driver = webdriver.Chrome(service=service, options=options)
+log("Driver iniciado.")
 
 try:
     driver.maximize_window()
+    log("Janela maximizada.")
 
     driver.get("https://fiserv.deskbee.app/login")
+    log("Página de login acessada.")
 
-    # Aguardar e preencher e-mail
     email_input = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//input[@aria-label='Digite seu e-mail']"))
     )
     email_input.send_keys("danielluis.david@fiserv.com")
+    log("E-mail inserido.")
 
-    # Aguardar e preencher senha
     password_input = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//input[@aria-label='Digite sua senha']"))
     )
     password_input.send_keys("Welcome@3")
+    log("Senha inserida.")
 
-    # Aguardar e clicar em Entrar
     entrar_button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//span[contains(text(),'Entrar')]"))
     )
     entrar_button.click()
+    log("Botão 'Entrar' clicado.")
 
-    # Aguardar e clicar em Reserva Estação
     reserva_estacao_button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//span[@data-msgid='Reserva Estação']"))
     )
     reserva_estacao_button.click()
+    log("Acessando tela de reserva de estação.")
 
-    # Aguardar o campo de data
     data_input = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//input[@aria-label='Data da reserva, inserir dia, mês e ano']"))
     )
-
-    # Preencher a data válida
     data_valida = calcular_data_valida()
     data_input.send_keys(data_valida)
+    log(f"Data da reserva inserida: {data_valida}.")
 
-    # Aguardar e preencher horário de início
     hora_inicio_input = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//input[@aria-label='Horario de início, inserir somente números']"))
     )
     hora_inicio_input.send_keys("0900")
+    log("Horário de início inserido: 0900.")
 
-    # Aguardar e preencher horário de fim
     hora_fim_input = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//input[@aria-label='Horario de fim, inserir somente números']"))
     )
     hora_fim_input.send_keys("1800")
+    log("Horário de fim inserido: 1800.")
 
-    # Aguardar e clicar em Lista
     lista_button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//span[@data-msgid='Lista']"))
     )
     lista_button.click()
+    log("Botão 'Lista' clicado.")
 
-    # Aguardar e preencher o campo de busca
     busca_estacao_input = WebDriverWait(driver, 10).until(
         EC.visibility_of_element_located((By.XPATH, "//input[@aria-label='Buscar estação de trabalho pelo nome, pressione enter para completar sua busca']"))
     )
     busca_estacao_input.send_keys("EST 8.128")
+    log("Estação de trabalho buscada: EST 8.128.")
 
-    # Aguardar o tempo necessário para a busca ser realizada
     WebDriverWait(driver, 10).until(
         EC.presence_of_element_located((By.XPATH, "//button[@aria-label='Selecionar EST 8.128, Paulista › São Paulo › 8º Andar']"))
     )
-
-    # Clicar no botão "Selecionar"
     selecionar_button = driver.find_element(By.XPATH, "//button[@aria-label='Selecionar EST 8.128, Paulista › São Paulo › 8º Andar']")
     selecionar_button.click()
+    log("Estação 8.128 selecionada.")
 
-    # Clicar no botão de confirmação
     confirmar_button = WebDriverWait(driver, 10).until(
         EC.element_to_be_clickable((By.XPATH, "//button[contains(@class, 'q-btn') and contains(., 'CONFIRMO QUE LI E ESTOU DE ACORDO')]"))
     )
     confirmar_button.click()
+    log("Reserva confirmada.")
 
+except Exception as e:
+    log(f"Erro: {e}")
 finally:
     driver.quit()
+    log("Driver encerrado.")
