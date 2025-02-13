@@ -96,11 +96,11 @@ try:
 
     # Aguardar o tempo necessário para a busca ser realizada
     WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.XPATH, "//button[@aria-label='Selecionar EST 8.127, Paulista › São Paulo › 8º Andar']"))
+        EC.presence_of_element_located((By.XPATH, "//button[@aria-label='Selecionar EST 8.128, Paulista › São Paulo › 8º Andar']"))
     )
 
     # Clicar no botão "Selecionar"
-    selecionar_button = driver.find_element(By.XPATH, "//button[@aria-label='Selecionar EST 8.127, Paulista › São Paulo › 8º Andar']")
+    selecionar_button = driver.find_element(By.XPATH, "//button[@aria-label='Selecionar EST 8.128, Paulista › São Paulo › 8º Andar']")
     selecionar_button.click()
 
     # Clicar no botão de confirmação
