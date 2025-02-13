@@ -5,12 +5,14 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from datetime import datetime, timedelta
+import sys
 
 # Removendo chromedriver_autoinstaller devido ao erro de import
 
 def log(mensagem):
     timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     print(f"[{timestamp}] {mensagem}")
+    sys.stdout.flush()  # Força a saída imediata
 
 def calcular_data_valida():
     data_atual = datetime.now()
