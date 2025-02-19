@@ -3,7 +3,7 @@ name: Agendar Reserva
 on:
   schedule:
     - cron: '10 3 * * *'  # Hora de Brasília (UTC-3) = 03h10 UTC
-  workflow_dispatch:  # Permite rodar manualmente pelo GitHub Actions
+  workflow_dispatch:
 
 jobs:
   reserva:
@@ -16,12 +16,12 @@ jobs:
       - name: Instalar dependências
         run: |
           sudo apt update
-          sudo apt install -y unzip
-          wget -O /tmp/chromedriver.zip https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.94/linux64/chromedriver-linux64.zip
-          unzip /tmp/chromedriver.zip -d /usr/local/bin/
-          sudo chmod +x /usr/local/bin/chromedriver
-          wget -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i /tmp/google-chrome.deb || sudo apt --fix-broken install -y
+          sudo apt install -y google-chrome-stable chromium-driver unzip
+
+      - name: Verificar instalações
+        run: |
+          google-chrome --version
+          chromedriver --version
 
       - name: Configurar ambiente Python
         uses: actions/setup-python@v3
@@ -36,3 +36,7 @@ jobs:
           EMAIL: ${{ secrets.DESKBEE_EMAIL }}
           SENHA: ${{ secrets.DESKBEE_SENHA }}
         run: python reserva.py
+
+      - name: Registrar saída do Selenium (se falhar)
+        if: failure()
+        run: cat /tmp/chromedriver.log || true
