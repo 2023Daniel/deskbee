@@ -13,15 +13,13 @@ jobs:
       - name: Clonar repositório
         uses: actions/checkout@v3
 
-      - name: Instalar dependências
+      - name: Instalar Google Chrome
         run: |
           sudo apt update
-          sudo apt install -y google-chrome-stable chromium-driver unzip
+          sudo apt install -y google-chrome-stable
 
-      - name: Verificar instalações
-        run: |
-          google-chrome --version
-          chromedriver --version
+      - name: Verificar instalação do Chrome
+        run: google-chrome --version
 
       - name: Configurar ambiente Python
         uses: actions/setup-python@v3
@@ -29,7 +27,7 @@ jobs:
           python-version: "3.10"
 
       - name: Instalar bibliotecas Python
-        run: pip install selenium
+        run: pip install selenium webdriver-manager
 
       - name: Executar script de reserva
         env:
