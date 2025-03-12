@@ -2,7 +2,8 @@ name: Agendar Reserva
 
 on:
   schedule:
-    - cron: '10 3 * * *'  # Hora de Brasília (UTC-3) = 03h10 UTC
+    - 
+#cron: '0 3 * * *'  # Hora de Brasília (UTC-3) = 03h10 UTC
   workflow_dispatch:
 
 jobs:
